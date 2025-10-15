@@ -164,10 +164,9 @@ console.log(flickData)
 
 //if new items addred to film database they need to appear in recently added section in HorrorFlicks
 
-// Add comments to explain your logic.
+// Add comments to explain my logic.
 
-// Write a README that explains the project, your learning, and how to run it.
-// Show screenshots in your portfolio or README.
+// Write a readme   with screenshotes
 
 useEffect(() => {
   if (firstRender.current) {
