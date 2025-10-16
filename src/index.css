@@ -10,7 +10,8 @@
   --ruby-red: #EF233C;
   --midnight-purple: #2d0036;
   --midnight-purple-dark: rgba(20, 0, 30, 1);
-  --midnight-purple-light: #7d5ca3;;
+  --midnight-purple-light: #7d5ca3;
+  --user-review-black: #2E2E2E;
 }
 
 * {
@@ -448,7 +449,8 @@ a {
 }
 
 .user-review {
-  background: linear-gradient(168deg,rgba(204, 153, 0, 1) 50%, rgba(255, 255, 255, 1) 100%);
+  /* background: linear-gradient(168deg,rgba(204, 153, 0, 1) 50%, rgba(255, 255, 255, 1) 100%); */
+  background-color: var(--user-review-black);
   border: 2px solid var(--white);
 }
 

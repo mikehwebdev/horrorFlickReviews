@@ -51,13 +51,13 @@ const [imdbData, setImdbData] = useState(null);
             <br /> {reviewText}
           </p>
           <p className="flick-imdb-actors">
-            Actors: {imdbData.Actors ? imdbData.Actors : "No response from IMDb"}
+            Actors: {imdbData.Actors}
           </p>
           <p className="flick-imdb-director">
-            Director: {imdbData.Director ? imdbData.Director : "No response from IMDb"}
+            Director: {imdbData.Director}
           </p>
           <p className="flick-imdb-released">
-            Released: {imdbData.Released ? imdbData.Released : "No response from IMDb"}
+            Released: {imdbData.Released}
           </p>
           {imdbData.Poster && (
             <img
