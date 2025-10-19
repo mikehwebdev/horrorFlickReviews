@@ -45,8 +45,10 @@ export default function HorrorFlicks() {
     director: "Please search",
     release: "Please search",
     rating:stabChoice,
-    userReview: true,
+    userReview: true
   }
+
+  // the clear modal only fails if i change text just changing stabs is fine
 
   const [renderData, setRenderData] = useState(defaultRenderData)
 
@@ -86,17 +88,9 @@ const flickResultElements = filterResults.map(flickResult => (
   />
 ))
 
-function clearModal(){
- setFlickData(prev => (
-    prev.map(flick => {
-      return {...flick, clicked: false}
-    }
-  ))
-)
-}
+
 
 function reviewClicked(id){
-  
   setFlickData(prev => (
     prev.map(flick => {
       return {...flick, clicked: id === flick.id ? true : false }
@@ -106,12 +100,13 @@ function reviewClicked(id){
 
 setTimeout(()=>{
       
- clearModal()
+ setFlickData(prev => prev.map(flick => ({...flick, clicked: false})))
 
     }, 3000)
 }
 
 function editReview(id){
+  
   setFlipped(true)
   setUserImdbData(flickData[id])
   setRenderData(flickData[id])
@@ -231,13 +226,12 @@ function buttonDisplay (){
 
 function flickDataUpdater(e){
   e.preventDefault()
-
-  clearModal()
 if (renderData.id === flickData.length) {
   setFlickData( prev => [
     ...prev,
     {...renderData,
-      rating:stabChoice
+      rating:stabChoice,
+      clicked:false
   }]) 
 }
 
