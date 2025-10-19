@@ -2,10 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import stabHook from "../../Hooks/stabHook"
 import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 
-
-
-
-export default function FlickResult({title, rating, id, displayed, tabbable, userReview, clicked, reviewClicked, editReview, clearModal}){
+export default function FlickResult({title, rating, id, displayed, tabbable, userReview, clicked, reviewClicked, editReview}){
 
 let navigate = useNavigate()
 

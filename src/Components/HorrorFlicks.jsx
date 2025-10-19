@@ -84,7 +84,6 @@ const flickResultElements = filterResults.map(flickResult => (
     clicked={flickResult.clicked}
     reviewClicked={reviewClicked}
     editReview={editReview}
-    clearModal={clearModal}
   />
 ))
 
