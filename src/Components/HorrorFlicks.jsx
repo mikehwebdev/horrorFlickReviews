@@ -45,7 +45,7 @@ export default function HorrorFlicks() {
     director: "Please search",
     release: "Please search",
     rating:stabChoice,
-    userReview: true
+    userReview: true,
   }
 
   const [renderData, setRenderData] = useState(defaultRenderData)
@@ -79,8 +79,43 @@ const flickResultElements = filterResults.map(flickResult => (
     displayed={flickResult.displayed}
     userReview={flickResult.userReview}
     tabbable={searchString !== ''}
+    clicked={flickResult.clicked}
+    reviewClicked={reviewClicked}
+    editReview={editReview}
+    clearModal={clearModal}
   />
 ))
+
+function clearModal(){
+ setFlickData(prev => (
+    prev.map(flick => {
+      return {...flick, clicked: false}
+    }
+  ))
+)
+}
+
+function reviewClicked(id){
+  
+  setFlickData(prev => (
+    prev.map(flick => {
+      return {...flick, clicked: id === flick.id ? true : false }
+    }
+  ))
+)
+
+setTimeout(()=>{
+      
+ clearModal()
+
+    }, 3000)
+}
+
+function editReview(id){
+  setFlipped(true)
+  setUserImdbData(flickData[id])
+  setRenderData(flickData[id])
+}
 
 function localReviewStringUpdater(e) {
   setSearchString(e.target.value)
@@ -122,7 +157,6 @@ try {
       const res = await fetch(`http://www.omdbapi.com/?apikey=b60f271c&t=${imdbSearchString}`)
       const data = await res.json()
 
-      console.log(data)
       if (!data || data.Response === "False") {
         setTimeout(() => {
         setFetchingError(!data ? 'OMDb or network error' : data.Response ? 'Movie not found on OMDB. Try another search!' : 'Unknown error')
@@ -149,6 +183,7 @@ try {
           imdbRating: data.imdbRating,
           imdbLink: data.imdbLink,
           rating: stabChoice,
+          clicked:false
         }
       }
     )
@@ -160,9 +195,6 @@ try {
       return
     }
 }
-console.log(flickData)
-
-//if new items addred to film database they need to appear in recently added section in HorrorFlicks
 
 // Add comments to explain my logic.
 
@@ -200,11 +232,20 @@ function buttonDisplay (){
 function flickDataUpdater(e){
   e.preventDefault()
 
+  clearModal()
+if (renderData.id === flickData.length) {
   setFlickData( prev => [
     ...prev,
     {...renderData,
       rating:stabChoice
-    }])
+  }]) 
+}
+
+setFlickData(
+  prev => prev.map(flick => flick.id === renderData.id ? {...renderData, rating:stabChoice} : flick )
+)
+
+
     inputRef.current.value = ''
     inputRef.current.focus()
     setFlipped(false)
