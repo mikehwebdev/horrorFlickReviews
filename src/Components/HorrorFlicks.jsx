@@ -9,15 +9,11 @@ import imdbLogo from "../img/IMDb_Logo.png";
 import Holding from "./HoldingMessage"
 import Error from "./Error"
 
-
 // add delete function
 //add banner for use review?
-//add comments to code
 //create read me
 // text overflowing on created flicks
 //back button on edit view?
-
-
 
 export default function HorrorFlicks() {
 
