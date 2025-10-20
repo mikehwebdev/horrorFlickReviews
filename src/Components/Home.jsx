@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 
-
 export default function Home(){
 
+{/* Main layout component - renders page content using Outlet */}
 
     return (
         <>

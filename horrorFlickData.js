@@ -1,5 +1,17 @@
 
+{/* Main flick database use for pre-existing Mikey flick reviews */}
+
 const horrorFlicksData = [
+  // Unique identifier for the movie
+        //title: "String",      // Movie title
+        //rating: Number,               // Mikey's rating (1-5 knives)
+        //subHeader: "String",        // Movie/user tagline
+        //reviewText: "String",       // Mikey's/user review text
+        //imdbLink: "String",         // Link to external site (IMDB)
+        //imdbId: "tt0084787",     // IMDb ID for fetching OMDb data
+        //userReview: false,       // Indicates a user review for conditional rendering
+        //clicked: false           // For condionally rendering modal
+
     {
         id:0,
         title:"The Thing",

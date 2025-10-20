@@ -9,6 +9,16 @@ import imdbLogo from "../img/IMDb_Logo.png";
 import Holding from "./HoldingMessage"
 import Error from "./Error"
 
+
+// add delete function
+//add banner for use review?
+//add comments to code
+//create read me
+// text overflowing on created flicks
+//back button on edit view?
+
+
+
 export default function HorrorFlicks() {
 
   const [searchString, setSearchString] = useState('')
@@ -48,10 +58,7 @@ export default function HorrorFlicks() {
     userReview: true
   }
 
-  // the clear modal only fails if i change text just changing stabs is fine
-
   const [renderData, setRenderData] = useState(defaultRenderData)
-
 
 useEffect(() => {
   localStorage.setItem('flickData', JSON.stringify(flickData));
@@ -87,8 +94,6 @@ const flickResultElements = filterResults.map(flickResult => (
   />
 ))
 
-
-
 function reviewClicked(id){
   setFlickData(prev => (
     prev.map(flick => {
@@ -98,14 +103,12 @@ function reviewClicked(id){
 )
 
 setTimeout(()=>{
-      
- setFlickData(prev => prev.map(flick => ({...flick, clicked: false})))
-
+  setFlickData(prev => prev.map(flick => ({...flick, clicked: false})))
     }, 3000)
 }
 
 function editReview(id){
-  
+  window.scrollTo(0,0)
   setFlipped(true)
   setUserImdbData(flickData[id])
   setRenderData(flickData[id])
@@ -190,10 +193,6 @@ try {
     }
 }
 
-// Add comments to explain my logic.
-
-// Write a readme   with screenshotes
-
 useEffect(() => {
   if (firstRender.current) {
   firstRender.current = false
@@ -225,6 +224,11 @@ function buttonDisplay (){
 
 function flickDataUpdater(e){
   e.preventDefault()
+
+  // this can be refactored - no need for two setter functions
+
+  setFlickData(prev => prev.map(flick => ({...flick, clicked: false})))
+
 if (renderData.id === flickData.length) {
   setFlickData( prev => [
     ...prev,

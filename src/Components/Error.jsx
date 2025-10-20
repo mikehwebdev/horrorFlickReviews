@@ -2,6 +2,10 @@
 import {Link}  from "react-router-dom"
 import { FaAnglesLeft } from "react-icons/fa6";
 
+{/* Component for displaying errors */}
+
+{/* Passes two props - message for the error message for the users and link for navigating user back to a journey  */}
+
 export default function Error({message, link}){
     return (
 

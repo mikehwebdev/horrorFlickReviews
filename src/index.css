@@ -14,6 +14,8 @@
   --user-review-black: #2E2E2E;
 }
 
+/* Global styles */
+
 * {
   padding: 0;
   margin: 0;
@@ -25,8 +27,8 @@ html {
   height: 100%;
   background: linear-gradient(135deg, var(--dark-grey) 60%, var(--midnight-purple) 100%);
   background-attachment: fixed;
+  scroll-behavior: smooth;
 }
-
 
 #root {
   display: flex;
@@ -58,7 +60,7 @@ html {
 }
 
 .error-message {
-   margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .error-image {
@@ -90,7 +92,6 @@ a {
   align-self: center;
   background: var(--midnight-purple-dark);
   border: 2px solid var(--scarlet-red);
-  /* box-shadow: 0 0 30px var(--midnight-purple-light); */
 }
 
 .flick-not-found-title {
@@ -143,6 +144,20 @@ a {
   animation: pulse 1500ms infinite;
 }
 
+.knife {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  opacity: .3;
+}
+
+.knife:hover {
+  scale: 1.2;
+}
+
+.filled {
+  color: var(--scarlet-red);
+  opacity: 1;
+}
+
 /* Flipping container for main body */
 
 .flipper {  
@@ -182,7 +197,6 @@ a {
 .flipped {
   transform: rotateY(180deg);
 }
-
 
 /* Flick input form */
 
@@ -235,7 +249,6 @@ a {
   cursor: pointer;
   background: var(--midnight-purple-light);
   margin-bottom: 1rem;
-  
   transition: background-color 500ms ease-in;
   border: var(--grey) dashed 2px;
 }
@@ -268,19 +281,23 @@ a {
   border: var(--grey) dashed 2px;
 }
 
+.flick-input-director,
+.flick-input-actors,
+.flick-input-released {
+  margin-bottom: .8rem;
+  font-style: italic; 
+}
+
 .flick-input-director {
   grid-area: fs-director;
-  margin-bottom: .8rem;
 }
 
 .flick-input-actors {
   grid-area: fs-actors;
-  margin-bottom: .8rem;
 }
 
 .flick-input-released {
   grid-area: fs-released;
-  margin-bottom: .8rem;
 }
 
 .flick-input-imdb-poster {
@@ -300,7 +317,6 @@ a {
   color: var(--white);
   transition: opacity 500ms linear;
   opacity: .25;
-  
 }
 
 .completed {
@@ -308,8 +324,6 @@ a {
   border: 2px solid var(--scarlet-red);
   box-shadow: 0 0 15px var(--midnight-purple-dark);
   color: var(--white);
-  
-  
 }
 
 .flick-input-submit.completed {
@@ -317,9 +331,6 @@ a {
   opacity: 1;
   animation: pulse 1500ms infinite;
 }
-
-
-/* Main search container */
 
 .flick-search {
   width: 100%;
@@ -339,7 +350,6 @@ a {
   grid-template-columns: 1fr 3rem 1fr;
   grid-template-rows: 3rem 3rem 3rem;
   margin-bottom: 1rem;
-  
 }
 
 .search-input, .imdb-search-input {
@@ -383,7 +393,6 @@ a {
   line-height: 0;
 }
 
-
 .fetch-btn-flicks, .fetch-btn-imdb {
   display: grid;
   place-items: center;
@@ -401,24 +410,14 @@ a {
   grid-row: 1/2;
 } 
 
-/* .fetch-btn-flicks {
-  grid-column: 1/2;
-  grid-row: 1/2;
-}
-
-.fetch-btn-imdb {
-  grid-column: 1/2;
-  grid-row: 1/2; */
-/* } */
-
 .search-input:hover, .search-input:focus, .imdb-search-input:hover, .imdb-search-input:focus,
-.fetch-btn-flicks:hover, .fetch-btn-flicks:focus, .fetch-btn-imdb:hover, .fetch-btn-imdb:focus  
+.fetch-btn-flicks:hover, .fetch-btn-flicks:focus, .fetch-btn-imdb:hover, .fetch-btn-imdb:focus, .flick-result:hover, .flick-result:focus  
 { 
   background-color: var(--scarlet-red);  
   box-shadow: 0 0 20px var(--ruby-red);   
   outline: none;
   transition: 500ms linear all;
-  animation: pulse 1500ms infinite ;
+  animation: pulse 1500ms infinite;
 }
 
 .flick-result-container {
@@ -426,7 +425,6 @@ a {
   flex-direction: column;
   width: 100%;
   max-width: 60rem;
-  /* min-height: 100vh; */
   margin-top: 1rem;
 }
 
@@ -445,7 +443,6 @@ a {
   transition: background-color 250ms linear;
   background: var(--midnight-purple-dark);
   border: 2px solid var(--scarlet-red);
-  /* box-shadow: 0 0 30px var(--midnight-purple-light); */
 }
 
 .user-review {
@@ -479,12 +476,6 @@ a {
   filter: blur(5px);
 }
 
-.flick-result:hover, .flick-result:focus {
-  background-color: var(--scarlet-red);  
-  box-shadow: 0 0 20px var(--ruby-red);   
-  outline: none;
-}
-
 .flick-result:hover > .flick-result-rating > .knife, .flick-result:focus > .flick-result-rating > .knife {
   color: var(--white);
   opacity: 1;
@@ -509,22 +500,7 @@ a {
   font-size: clamp(1.75rem, 3vw, 3rem)
 }
 
-.knife {
-  font-size: clamp(2rem, 5vw, 2.8rem);
-  opacity: .3;
-}
-
-.knife:hover {
-  scale: 1.2;
-}
-
-.filled {
-  color: var(--scarlet-red);
-  opacity: 1;
-}
-
-
-/* Flick review */
+/* Flick component style */
 
 .flick {
   display: grid;
@@ -550,7 +526,6 @@ a {
   overflow: hidden;
   background: var(--midnight-purple-dark);
   border: 2px solid var(--scarlet-red);
-  /* box-shadow: 0 0 30px var(--midnight-purple-light); */
 }
 
 .flick-title {
@@ -568,7 +543,6 @@ a {
   grid-row: 2;
   justify-self: end;
   align-self: center;
-
 }
 
 .flick-mikey-sub-title {
@@ -683,7 +657,7 @@ a {
   font-size: 1.5rem;
 }
 
-/* Animatio classes */
+/* Animation classes */
 
 .slide-up {
   position: relative;
@@ -706,9 +680,9 @@ a {
   animation: splat 500ms forwards;
 }
 
+/* Media queries */
 
 @media (min-width:850px) {
-  
 
 .flick {
   grid-template-columns: 1.5rem 1fr 1fr 1.5rem 2fr 1.5rem;
@@ -757,7 +731,7 @@ a {
   transition: 500ms linear;
 }
 
-/* animations */
+/* Animations */
 
 @keyframes slide-up {
   0% {
