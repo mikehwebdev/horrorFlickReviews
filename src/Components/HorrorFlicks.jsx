@@ -16,6 +16,8 @@ import Error from "./Error"
 
 export default function HorrorFlicks() {
 
+
+
   const [searchString, setSearchString] = useState('')
   const [imdbInputString, setImdbInputString] = useState('')
   const [imdbSearchString, setImdbSearchString] = useState("")
@@ -37,6 +39,7 @@ export default function HorrorFlicks() {
   const [flipped, setFlipped] = useState(false)
   const inputRef = useRef(null)
   
+  console.log(flickData)
 
   const defaultRenderData = {
     id: flickData.length,
