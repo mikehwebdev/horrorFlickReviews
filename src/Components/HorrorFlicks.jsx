@@ -10,7 +10,6 @@ import Holding from "./HoldingMessage"
 import Error from "./Error"
 
 // add delete function
-//add banner for use review?
 //create read me
 // text overflowing on created flicks
 //back button on edit view?

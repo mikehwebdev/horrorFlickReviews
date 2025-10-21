@@ -14,6 +14,7 @@ let navigate = useNavigate()
         <div className={`flick-result${userReview? ' user-review' : ''} ${clicked && userReview && 'background-blur'}`} tabIndex={displayed && tabbable? 0 : -1}>
             <h2 className="flick-result-title">{title}</h2>
             <div className="flick-result-rating" tabIndex={-1}>{stabHook(false, rating)}</div>
+            {userReview && <p className="new-tag boing">New!</p>}
         </div>
         {/* action buttons for is user review is clicked - doesn't display for default data */}
         { clicked && userReview && <div className={`user-review-modal${clicked && userReview ? ' opacity-full' : ''}`}>

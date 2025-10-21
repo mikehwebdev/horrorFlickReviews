@@ -315,7 +315,7 @@ a {
   border-radius: .5rem;
   background-color: var(--midnight-purple-light);
   color: var(--white);
-  transition: opacity 500ms linear;
+  transition: opacity 500ms ease-in;
   opacity: .25;
 }
 
@@ -364,7 +364,7 @@ a {
   border: none;
   box-shadow: 0 0 15px rgba(0,0,0, .3);
   cursor: pointer;
-  transition: background-color 250ms linear;
+  transition: background-color 500ms ease-in;
   height: 100%;
   grid-column: 1/2;
   grid-row: 1/2;
@@ -411,13 +411,13 @@ a {
 } 
 
 .search-input:hover, .search-input:focus, .imdb-search-input:hover, .imdb-search-input:focus,
-.fetch-btn-flicks:hover, .fetch-btn-flicks:focus, .fetch-btn-imdb:hover, .fetch-btn-imdb:focus, .flick-result:hover, .flick-result:focus  
+.fetch-btn-flicks:hover, .fetch-btn-flicks:focus, .fetch-btn-imdb:hover, .fetch-btn-imdb:focus, .flick-result:hover, .flick-result:focus, .flick-result:hover > .new-tag, .flick-result:focus > .new-tag
 { 
   background-color: var(--scarlet-red);  
   box-shadow: 0 0 20px var(--ruby-red);   
   outline: none;
-  transition: 500ms linear all;
-  animation: pulse 1500ms infinite;
+  transition: 500ms ease-in all;
+  
 }
 
 .flick-result-container {
@@ -440,7 +440,7 @@ a {
   cursor: pointer;
   border-radius: .75rem;
   color: var(--white);
-  transition: background-color 250ms linear;
+  transition: background-color 500 ease-in;
   background: var(--midnight-purple-dark);
   border: 2px solid var(--scarlet-red);
 }
@@ -474,6 +474,23 @@ a {
 .background-blur {
   transition: filter 500ms ease-in;
   filter: blur(5px);
+}
+
+.new-tag {
+  position: absolute;
+  left: -1.1rem;
+  top: -.75rem;
+  background-color: var(--user-review-black);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  padding: .35rem;
+  color: var(--white);
+  border: 2px solid var(--white);
+  border-radius: .5rem;
+  transform: rotate(-25deg);
+  box-shadow: 0 0 8px var(--white);
+  animation:  boing 2s ease-in 3s infinite;   
+  transition: background-color 500ms ease-in;
+
 }
 
 .flick-result:hover > .flick-result-rating > .knife, .flick-result:focus > .flick-result-rating > .knife {
@@ -635,7 +652,7 @@ a {
   cursor: pointer;
   background: var(--midnight-purple-dark);
   border: 2px solid var(--scarlet-red);
-  transition: transform 250ms linear;
+  transition: transform 500ms ease-in;
   color: var(--white);
   box-shadow: 0 0 30px var(--midnight-purple-light);
 }
@@ -728,7 +745,7 @@ a {
 
 .opacity-full {
   opacity: 1;
-  transition: 500ms linear;
+  transition: 500ms ease-in;
 }
 
 /* Animations */
@@ -784,4 +801,15 @@ a {
     scale: 1;
     opacity: 1;
   }
+}
+
+@keyframes boing {
+  0% {transform: rotate(-25deg) translateY(0%);}
+    70% {transform: rotate(-25deg);}
+    80% { transform:translateY(-15%) rotate(-25deg);}
+    90% { transform:translateY(0%) rotate(-25deg);}
+    95% { transform:translateY(-7%) rotate(-25deg);}
+    97% { transform:translateY(0%) rotate(-25deg);}
+    99% { transform:translateY(-3%)rotate(-25deg);}
+    100% { transform:translateY(0) rotate(-25deg);}
 }
