@@ -5,6 +5,7 @@ import Flick from "./Flick"
 import stabHook from "../../Hooks/stabHook"
 import { horrorFlicksData } from "../../horrorFlickData"
 import { FaAnglesRight } from "react-icons/fa6"
+import { FaAnglesLeft } from "react-icons/fa6";
 import imdbLogo from "../img/IMDb_Logo.png";
 import Holding from "./HoldingMessage"
 import Error from "./Error"
@@ -15,8 +16,6 @@ import Error from "./Error"
 //back button on edit view?
 
 export default function HorrorFlicks() {
-
-
 
   const [searchString, setSearchString] = useState('')
   const [imdbInputString, setImdbInputString] = useState('')
@@ -39,8 +38,6 @@ export default function HorrorFlicks() {
   const [flipped, setFlipped] = useState(false)
   const inputRef = useRef(null)
   
-  console.log(flickData)
-
   const defaultRenderData = {
     id: flickData.length,
     imdbId: '',
@@ -219,13 +216,8 @@ function buttonDisplay (){
   return 'Submit'
 }
 
-
 function flickDataUpdater(e){
   e.preventDefault()
-
-  // this can be refactored - no need for two setter functions
-
-  setFlickData(prev => prev.map(flick => ({...flick, clicked: false})))
 
 if (renderData.id === flickData.length) {
   setFlickData( prev => [
@@ -237,10 +229,17 @@ if (renderData.id === flickData.length) {
 }
 
 setFlickData(
-  prev => prev.map(flick => flick.id === renderData.id ? {...renderData, rating:stabChoice} : flick )
+  prev => prev.map(flick => flick.id === renderData.id ? {...renderData, rating:stabChoice} :  {...flick, clicked: false} )
 )
 
+    inputRef.current.value = ''
+    inputRef.current.focus()
+    setFlipped(false)
+    setRenderData(defaultRenderData)
+    setImdbInputString('') 
+}
 
+function cancelEdit(){
     inputRef.current.value = ''
     inputRef.current.focus()
     setFlipped(false)
@@ -283,7 +282,6 @@ setFlickData(
                   tabIndex={searchString ? -1 : 0}
                 />
                 {imdbInputString && <button type="submit" className="fetch-btn-imdb"><FaAnglesRight className="drop-in"  tabIndex={-1}/></button>}
-                {/* why isnt the animation playing on this arrow? */}
                 {flickExists.exists && 
                 
                 <div className="flick-already-exists splat">
@@ -340,6 +338,10 @@ setFlickData(
                   value={renderData.reviewText}
                   tabIndex={userImdbData ? 0 : -1}
                 />
+                  <button className="cancel-edit-btn" type="button" onClick={() => cancelEdit()}>
+                    <FaAnglesLeft className="link-arrows" />
+                    <p className="cancel-edit-text">back</p>
+                  </button>
                 <button className={`flick-input-submit${buttonDisplay() === 'Submit' ? ' completed' : ''}`}
                 type="submit"
                 disabled={buttonDisplay() !== 'Submit'}

@@ -212,7 +212,7 @@ a {
   ". fs-director fs-director ."
   ". fs-actors fs-actors ."
   ". fs-released fs-released ."
-  ". . input-button ."
+  ". fs-cancel-btn input-button ."
   ". fs-imdb-poster fs-imdb-poster ."
   ". . imdb-rating ."
   ". . . ."
@@ -235,6 +235,8 @@ a {
   margin-bottom: .5rem;
   width: 90%;
 }
+
+
 
 .flick-input-search-rating {
   grid-area: fs-rating;
@@ -305,11 +307,8 @@ a {
   width: 100%;
 }
 
-.flick-input-submit {
-  grid-area: input-button;
-  width: 100%;
+.flick-input-submit, .cancel-edit-btn{
   height: 3rem;
-  justify-self: end;
   margin: .5rem 0 1rem .5rem;
   padding: .5rem ;
   border-radius: .5rem;
@@ -317,6 +316,46 @@ a {
   color: var(--white);
   transition: opacity 500ms ease-in;
   opacity: .25;
+}
+
+.cancel-edit-btn {
+  display: flex;
+  gap: .25rem;
+  width: fit-content;
+  align-items: center;
+  grid-area: fs-cancel-btn;
+  justify-self: start;
+  background: var(--midnight-purple-dark);
+  border: 2px solid var(--scarlet-red);
+  box-shadow: 0 0 15px var(--midnight-purple-dark);
+  color: var(--white);
+  opacity: 1;
+}
+
+.cancel-edit-btn > .link-arrows, .cancel-edit-btn .cancel-edit-text {
+  color: var(--white);
+}
+
+.cancel-edit-text {
+  padding: 0 0 0 .25rem;
+  color: var(--grey);
+  margin: 0;
+  line-height: 7;
+}
+
+.flick-input-submit {
+  grid-area: input-button;
+  /* width: 100%;
+  height: 3rem; */
+  justify-self: end;
+  width: 100%;
+  /* margin: .5rem 0 1rem .5rem;
+  padding: .5rem ;
+  border-radius: .5rem;
+  background-color: var(--midnight-purple-light);
+  color: var(--white);
+  transition: opacity 500ms ease-in;
+  opacity: .25; */
 }
 
 .completed {
@@ -623,23 +662,23 @@ a {
 .back-to-search {
   grid-area: back-to-search; 
   line-height: 1.4;
+  justify-self: flex-start;
+  align-self: self-end;
+  height: 3rem;
 }
 
 .back-button-flex-container {
   display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   height: 100%;
-  align-items: flex-end;
-  justify-content: flex-start;  
+  line-height: 1.2;
+  align-items: end;
+  gap: .5rem;
 }
 
-.link-arrows {
-  color: var(--grey);
-  padding-bottom: .25rem ;
-}
-
-.back-text {
-  padding: 0 0 0 .25rem;
-  color: var(--grey);
+.back-button-flex-container > .back-text, .link-arrows {
+color: var(--grey);
 }
 
 .imdb-link {
