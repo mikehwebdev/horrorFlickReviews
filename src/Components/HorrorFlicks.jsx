@@ -6,14 +6,11 @@ import stabHook from "../../Hooks/stabHook"
 import { horrorFlicksData } from "../../horrorFlickData"
 import { FaAnglesRight } from "react-icons/fa6"
 import { FaAnglesLeft } from "react-icons/fa6";
-import imdbLogo from "../img/IMDb_Logo.png";
 import Holding from "./HoldingMessage"
 import Error from "./Error"
 
 // add delete function
 //create read me
-// text overflowing on created flicks
-//back button on edit view?
 
 export default function HorrorFlicks() {
 
@@ -40,20 +37,22 @@ export default function HorrorFlicks() {
   
   const defaultRenderData = {
     id: flickData.length,
-    imdbId: '',
-    imdbLink: '',
-    displayed: '',
-    reviewText: '',
-    subHeader: '',
     title: "Please search",
+    rating:stabChoice,
+    subHeader: '',
+    reviewText: '',
+    imdbLink: '',
+    imdbId: '',
+    userReview: true,
+    clicked:false,
+    displayed: '',
     actors: "Please search",
     director: "Please search",
     release: "Please search",
-    rating:stabChoice,
-    userReview: true
+    deleteClicked: false
   }
 
-  const [renderData, setRenderData] = useState(defaultRenderData)
+const [renderData, setRenderData] = useState(defaultRenderData)
 
 useEffect(() => {
   localStorage.setItem('flickData', JSON.stringify(flickData));
@@ -66,26 +65,31 @@ useEffect(()=> {
 const filterResults = flickData.map(flick => {
   return {
     ...flick,
-    displayed: flick.title.toLowerCase().includes(searchString.toLowerCase())
+    displayed: flick.displayed === false ? false : flick.title.toLowerCase().includes(searchString.toLowerCase())
   }
 })
 
-const flickResultElements = filterResults.map(flickResult => (
+const flickResultElements = filterResults
+.filter(flickResult => flickResult.displayed === true)
+.map(flickResult => (
   <FlickResult
     key={flickResult.id}
     id={flickResult.id}
     title={flickResult.title}
-    cardimage={flickResult.cardImage}
     rating={flickResult.rating}
-    subHeader={flickResult.subHeader}
-    reviewText={flickResult.reviewText}
-    imdbLink={flickResult.imdbLink}
+    // subHeader={flickResult.subHeader}
+    // reviewText={flickResult.reviewText}
+    // imdbLink={flickResult.imdbLink}
     displayed={flickResult.displayed}
     userReview={flickResult.userReview}
     tabbable={searchString !== ''}
     clicked={flickResult.clicked}
     reviewClicked={reviewClicked}
     editReview={editReview}
+    deleteReview={deleteReview}
+    deleteClicked={flickResult.deleteClicked}
+    clearPrompt={clearPrompt}
+    confirmDeletePrompt={confirmDeletePrompt}
   />
 ))
 
@@ -97,9 +101,13 @@ function reviewClicked(id){
   ))
 )
 
-setTimeout(()=>{
-  setFlickData(prev => prev.map(flick => ({...flick, clicked: false})))
-    }, 3000)
+// setTimeout(()=>{
+//   // setFlickData(prev => prev.map(flick => ({...flick, clicked: false, deleteClicked:false})))
+//   clearPrompt()
+//     }, 3000)
+
+// add back button instead of having a timeout
+
 }
 
 function editReview(id){
@@ -107,6 +115,45 @@ function editReview(id){
   setFlipped(true)
   setUserImdbData(flickData[id])
   setRenderData(flickData[id])
+}
+
+function deleteReview(e,id){
+  e.stopPropagation()
+  e.preventDefault()
+  setFlickData(prev => (
+    prev.map(flick => {
+      return {...flick, deleteClicked: id === flick.id ? true : false }
+    }
+  )
+  ))
+}
+
+function clearPrompt(e){
+  // I had to add this as I was having a timing issue with reacts render/update cycle. 
+  // If this was manually called it wouldn't have the desired effect but the timeout version would
+  if (e) {
+  // This ensures function is immediately called on click and no event bubbling
+  e.stopPropagation() 
+  //  Stops the page from rereeshing and scrolling to top
+  e.preventDefault() 
+  }
+    
+  setFlickData(prev => prev.map(flick => ({...flick, clicked: false, deleteClicked:false})))
+}
+
+function confirmDeletePrompt(e, id){
+
+  e.stopPropagation() 
+  e.preventDefault()
+  
+  
+setFlickData(prev =>(
+  prev.map(flick => flick.id === id ? {...flick, displayed:false} : flick)
+))
+
+clearPrompt()
+
+setRenderData(defaultRenderData)
 }
 
 function localReviewStringUpdater(e) {
@@ -284,10 +331,10 @@ function cancelEdit(){
                 {imdbInputString && <button type="submit" className="fetch-btn-imdb"><FaAnglesRight className="drop-in"  tabIndex={-1}/></button>}
                 {flickExists.exists && 
                 
-                <div className="flick-already-exists splat">
-                  <p className="flick-already-exists-text">This flick already exists</p>
-                  <Link to={`${flickExists.id}`} className="flick-already-exists-link" onClick={() =>setFlickExists({exists: false, id: null})} tabIndex={flickExists.exists ? 0 : -1}>
-                    <p className="flick-already-exists-text">Show me</p>
+                <div className="user-prompt splat">
+                  <p className="user-prompt-text">This flick already exists</p>
+                  <Link to={`${flickExists.id}`} className="user-prompt-link" onClick={() =>setFlickExists({exists: false, id: null})} tabIndex={flickExists.exists ? 0 : -1}>
+                    <p className="user-prompt-text">Show me</p>
                     <FaAnglesRight  />
                   </Link>
                 </div>
