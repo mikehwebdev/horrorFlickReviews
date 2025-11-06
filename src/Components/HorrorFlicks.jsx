@@ -9,8 +9,13 @@ import { FaAnglesLeft } from "react-icons/fa6";
 import Holding from "./HoldingMessage"
 import Error from "./Error"
 
-// add delete function
+
 //create read me
+
+// add back button instead of having a timeout
+
+//edit clamps so title grows with knives
+//remove blurring on user review
 
 export default function HorrorFlicks() {
 
@@ -106,7 +111,7 @@ function reviewClicked(id){
 //   clearPrompt()
 //     }, 3000)
 
-// add back button instead of having a timeout
+
 
 }
 
@@ -136,7 +141,8 @@ function clearPrompt(e){
   e.stopPropagation() 
   //  Stops the page from rereeshing and scrolling to top
   e.preventDefault() 
-  }
+  } 
+
     
   setFlickData(prev => prev.map(flick => ({...flick, clicked: false, deleteClicked:false})))
 }

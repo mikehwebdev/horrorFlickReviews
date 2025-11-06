@@ -20,6 +20,7 @@ let navigate = useNavigate()
         {/* action buttons for if user review is clicked - doesn't display for default data */}
 
         { clicked && userReview && <div className={`user-review-modal${clicked && userReview ? ' opacity-full' : ''}`}>
+            <FiChevronsLeft onClick={ e => clearPrompt(e)} className="modal-flex-item" />
             <FiEdit onClick={() => editReview(id)}  className="modal-flex-item" />
             <FiTrash2 onClick={(e) => deleteReview(e, id)} className="modal-flex-item" /> 
             <FiEye className="modal-flex-item" onClick={(e)=>{
