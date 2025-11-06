@@ -12,10 +12,8 @@ import Error from "./Error"
 
 //create read me
 
-// add back button instead of having a timeout
-
 //edit clamps so title grows with knives
-//remove blurring on user review
+//remove blurring on user review view and edit
 
 export default function HorrorFlicks() {
 
