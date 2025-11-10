@@ -1,3 +1,5 @@
+
+/* Imports */
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
@@ -14,7 +16,7 @@
   --user-review-black: #2E2E2E;
 }
 
-/* Global styles */
+/* Global styles & resets*/
 
 * {
   padding: 0;
@@ -30,6 +32,8 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Main container */
+
 #root {
   display: flex;
   flex-direction: column;
@@ -39,17 +43,21 @@ html {
   color: var(--white);
 }
 
+/* Site wrapper */
+
 .container {
-  width: 90%;
+  width: 95%;
   max-width: 60rem;
   display: flex;
   justify-content: center;
 }
 
-/* General typography misc styles*/
+/*** General typography misc styles ***/
+
+/* Main page stlyes */
 
 .title {
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-size: clamp(2.5rem, 10vw, 4.25rem);
   margin: 2rem 0;
   line-height: 1.4;
   text-align: center;
@@ -185,7 +193,7 @@ a {
 }
 
 .knife {
-  font-size: clamp(2rem, 6vw,4rem);
+  font-size: clamp(2.5rem, 10vw, 3.75rem);
   opacity: .3;
 }
 
@@ -238,7 +246,7 @@ a {
   transform: rotateY(180deg);
 }
 
-/* Flick input form */
+/* Flick input form layout */
 
 .flick-input-form {
   display: grid;
@@ -275,8 +283,6 @@ a {
   margin-bottom: .5rem;
   width: 90%;
 }
-
-
 
 .flick-input-search-rating {
   grid-area: fs-rating;
@@ -385,17 +391,8 @@ a {
 
 .flick-input-submit {
   grid-area: input-button;
-  /* width: 100%;
-  height: 3rem; */
   justify-self: end;
   width: 100%;
-  /* margin: .5rem 0 1rem .5rem;
-  padding: .5rem ;
-  border-radius: .5rem;
-  background-color: var(--midnight-purple-light);
-  color: var(--white);
-  transition: opacity 500ms ease-in;
-  opacity: .25; */
 }
 
 .completed {
@@ -422,6 +419,7 @@ a {
   color: var(--white);
 }
 
+
 .flick-search-inputs {
   display: grid;
   width: 100%;
@@ -430,6 +428,8 @@ a {
   grid-template-rows: 3rem 3rem 3rem;
   margin-bottom: 1rem;
 }
+
+/* Search inputs fields */
 
 .search-input, .imdb-search-input {
   font-family: 'Lato', sans-serif;
@@ -485,7 +485,7 @@ a {
   border-radius: 0 .5rem .5rem 0;
   outline: none;
   background-color: transparent;
-    grid-column: 1/2;
+  grid-column: 1/2;
   grid-row: 1/2;
 } 
 
@@ -496,8 +496,9 @@ a {
   box-shadow: 0 0 20px var(--ruby-red);   
   outline: none;
   transition: 500ms ease-in all;
-  
 }
+
+/* Flick result styles */
 
 .flick-result-container {
   display: flex;
@@ -506,6 +507,8 @@ a {
   max-width: 60rem;
   margin-top: 1rem;
 }
+
+/* Individual search result */
 
 .flick-result {
   display: grid;
@@ -526,12 +529,16 @@ a {
   border: 2px solid var(--scarlet-red);
 }
 
+/* User review additional styles */
+
 .user-review {
   background-color: var(--user-review-black);
   border: 2px solid var(--white);
   position: relative;
   transition: 500ms all ease-in;
 }
+
+/* Semi-transperant modal overlay */
 
 .user-review-modal {
   display: flex;
@@ -573,7 +580,6 @@ a {
   box-shadow: 0 0 8px var(--white);
   animation:  boing 2s ease-in 3s infinite;   
   transition: background-color 500ms ease-in;
-
 }
 
 .flick-result:hover > .flick-result-rating > .knife, .flick-result:focus > .flick-result-rating > .knife {
@@ -583,7 +589,7 @@ a {
 
 .flick-result-title {
   grid-area: flick-title;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1rem, 6vw, 2.5rem);
   line-height: 1.4;
   font-weight: 600;
 }
@@ -591,16 +597,16 @@ a {
 .flick-result-rating {
   grid-area: flick-rating;
   justify-self: flex-end;
-  align-self: center;
+  align-self: flex-end;
   line-height: 1.5rem;
   font-weight: 600;
 }
 
 .flick-result-rating > .knife {
-  font-size: clamp(1.75rem, 3vw, 3rem)
+  font-size: clamp(1rem, 6vw, 2.5rem)
 }
 
-/* Flick component style */
+/* Flick component styles */
 
 .flick {
   display: grid;
@@ -637,11 +643,11 @@ a {
 .flick-title {
   grid-area: flick-title;
   margin-bottom: .5rem;
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-size: clamp(2.5rem, 10vw, 3.75rem);
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-weight: 600;
-  align-self: center; 
+  line-height: .8;
 }
 
 .flick-mikey-rating {
@@ -653,7 +659,6 @@ a {
 .flick-mikey-sub-title {
   grid-area: fm-sub-title;
   font-style: italic;
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   margin-bottom: .6rem;
 }
 
@@ -662,15 +667,16 @@ a {
   text-decoration: underline;
   font-weight: 700;
   line-height: 1.4;
-  margin-bottom: .3rem;
-  font-size: clamp(1.1rem, 2.3vw, 1.4rem);
+  margin-bottom: .6rem;
+  font-size: clamp(1rem, 2.5vw, 1.15rem)
 }
 
 .flick-mikey-review-text,
 .flick-imdb-actors,
 .flick-imdb-director,
-.flick-imdb-released {
-  font-size: clamp(1rem, 3vw, 1.12rem);
+.flick-imdb-released,
+.flick-mikey-sub-title {
+  font-size: clamp(1rem, 3vw, 1.35rem);
 }
 
 .flick-mikey-review-text {
@@ -785,7 +791,7 @@ color: var(--grey);
   animation: splat 500ms forwards;
 }
 
-/* Media queries */
+/* Media query for desktop large device/desktop */
 
 @media (min-width:850px) {
 
@@ -834,10 +840,11 @@ color: var(--grey);
 
 .opacity-full {
   opacity: 1;
-  /* transition: 500ms ease-in; */
 }
 
 /* Animations */
+
+/* Flick result slides up into view */
 
 @keyframes slide-up {
   0% {
@@ -847,6 +854,8 @@ color: var(--grey);
   margin-bottom: 1.5rem;
   opacity: 1;}
 }
+
+/* Flick result disappears */
 
 @keyframes removed {
   0% {opacity: 1;
@@ -859,6 +868,8 @@ color: var(--grey);
   }
 }
 
+/* Button arrow drops in */
+
 @keyframes drop-in {
   0% { opacity: .25;
     scale: 3;}
@@ -870,16 +881,22 @@ color: var(--grey);
     scale: 1;}
 }
 
+/* Spooky glowing effect for title */
+
 @keyframes spooky-glow {
   0%, 100% { text-shadow: 0 0 8px var(--scarlet-red), 0 0 2px var(--white); }
   50% { text-shadow: 0 0 16px var(--ruby-red), 0 0 8px var(--white); }
 }
+
+/* Makes a button with a call to action pulse slightly */
 
 @keyframes pulse {
   0% {transform: scale(1);} 
   33% {transform: scale(1.05);} 
   100% {transform: scale(1);} 
 }
+
+/* Animation for the deletion confirmation to appear on the the clicked flick result */
 
 @keyframes splat {
   0% {
@@ -892,6 +909,8 @@ color: var(--grey);
     opacity: 1;
   }
 }
+
+/* Animation on my "New" tag on user reviews */
 
 @keyframes boing {
   0% {transform: rotate(-25deg) translateY(0%);}

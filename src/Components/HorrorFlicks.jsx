@@ -12,8 +12,7 @@ import Error from "./Error"
 
 //create read me
 
-//edit clamps so title grows with knives
-//remove blurring on user review view and edit
+// edit button change formatting to match usual back button
 
 export default function HorrorFlicks() {
 
@@ -103,13 +102,6 @@ function reviewClicked(id){
     }
   ))
 )
-
-// setTimeout(()=>{
-//   // setFlickData(prev => prev.map(flick => ({...flick, clicked: false, deleteClicked:false})))
-//   clearPrompt()
-//     }, 3000)
-
-
 
 }
 
