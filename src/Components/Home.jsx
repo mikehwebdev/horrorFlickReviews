@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 export default function Home(){
 
@@ -6,7 +6,9 @@ export default function Home(){
 
     return (
         <>
-        <h2 className="title">Mikey's Horror Micro Reviews</h2>      
+        <Link to="/">
+        <h2 className="title">Mikey's Horror Micro Reviews</h2>
+        </Link>
         <main className="container">
             <Outlet />
         </main>

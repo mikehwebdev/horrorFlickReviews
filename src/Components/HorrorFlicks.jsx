@@ -12,8 +12,6 @@ import Error from "./Error"
 
 //create read me
 
-// edit button change formatting to match usual back button
-
 export default function HorrorFlicks() {
 
   const [searchString, setSearchString] = useState('')
@@ -79,9 +77,6 @@ const flickResultElements = filterResults
     id={flickResult.id}
     title={flickResult.title}
     rating={flickResult.rating}
-    // subHeader={flickResult.subHeader}
-    // reviewText={flickResult.reviewText}
-    // imdbLink={flickResult.imdbLink}
     displayed={flickResult.displayed}
     userReview={flickResult.userReview}
     tabbable={searchString !== ''}
@@ -124,8 +119,6 @@ function deleteReview(e,id){
 }
 
 function clearPrompt(e){
-  // I had to add this as I was having a timing issue with reacts render/update cycle. 
-  // If this was manually called it wouldn't have the desired effect but the timeout version would
   if (e) {
   // This ensures function is immediately called on click and no event bubbling
   e.stopPropagation() 
@@ -301,11 +294,13 @@ function cancelEdit(){
                 <input
                   type="text"
                   placeholder="search Mikey's reviews..."
+                  name="Local review search"
                   onChange={localReviewStringUpdater}
                   value={searchString}
                   className="search-input"
                   onFocus={() => setFlipped(false)}
                   ref={inputRef}
+                  maxLength={25}
                 />
                 {searchString && <button type="submit" className="fetch-btn-flicks" tabIndex={-1}></button>}
               </form>
@@ -317,12 +312,14 @@ function cancelEdit(){
                 className="imdb-search-input-form">
                 <input
                   type="text"
+                  name="OMDb review search"
                   placeholder="search OMDb and add your own..."
                   onChange={imdbInputStringUpdater}
                   value={imdbInputString}
                   className="imdb-search-input"
                   onFocus={() => setFlipped(true)}
                   tabIndex={searchString ? -1 : 0}
+                  maxLength={25}
                 />
                 {imdbInputString && <button type="submit" className="fetch-btn-imdb"><FaAnglesRight className="drop-in"  tabIndex={-1}/></button>}
                 {flickExists.exists && 
