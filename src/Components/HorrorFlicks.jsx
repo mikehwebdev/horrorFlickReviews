@@ -10,7 +10,7 @@ import Holding from "./HoldingMessage"
 import Error from "./Error"
 
 
-//create read me
+// Add comments to this file
 
 export default function HorrorFlicks() {
 

@@ -198,7 +198,7 @@ a {
   opacity: .3;
 }
 
-.knife:hover {
+.flick-input-search-rating .knife:hover {
   scale: 1.2;
 }
 
@@ -643,17 +643,18 @@ a {
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+  
 }
 
 .flick-title {
   grid-area: flick-title;
   margin-bottom: .5rem;
-  font-size: clamp(2.5rem, 10vw, 3.5rem);
+  font-size: clamp(2rem, 6vw, 2.75rem);
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-weight: 600;
   line-height: .8;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .flick-mikey-rating {
@@ -662,10 +663,17 @@ a {
   align-self: start;
 }
 
+.flick-mikey-rating > .knife {
+  font-size: clamp(2rem, 6vw, 3.35rem);
+}
+
 .flick-mikey-sub-title {
   grid-area: fm-sub-title;
   font-style: italic;
   margin-bottom: .6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: reveal 3000ms linear forwards;
 }
 
 .mini-review-title {
@@ -678,12 +686,17 @@ a {
 }
 
 .flick-mikey-review-text,
+.flick-mikey-sub-title {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
 .flick-imdb-actors,
 .flick-imdb-director,
-.flick-imdb-released,
-.flick-mikey-sub-title {
-  font-size: clamp(1rem, 3vw, 1.35rem);
+.flick-imdb-released {
+  font-size: clamp(1rem, 3vw, 1rem)
 }
+
+
 
 .flick-mikey-review-text {
   grid-area: fm-review-text;
@@ -832,20 +845,16 @@ color: var(--grey);
   margin: 0;
   align-self: flex-start;
   object-fit:cover;
+  height: 100%;
 }
 
 .flick-imdb-actors, .flick-imdb-director, .flick-imdb-released {
-  font-size: 1.1rem;
   margin:0;
 }
 
 .flick-mikey-review-text {
-  font-size: 1rem;
   line-height: 1.3;
   letter-spacing: .25px;
-  max-height: 12rem;
-  overflow: scroll;
-  border-bottom: 1px solid rgba(255, 255, 255, .3);
 }
 
 }
@@ -935,4 +944,9 @@ color: var(--grey);
     97% { transform:translateY(0%) rotate(-25deg);}
     99% { transform:translateY(-3%)rotate(-25deg);}
     100% { transform:translateY(0) rotate(-25deg);}
+}
+
+@keyframes reveal {
+  0%{max-width: 0%;}
+  100%{max-width: 100%;}
 }

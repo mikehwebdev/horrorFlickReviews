@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import stabHook from "../../Hooks/stabHook"
 import { FiEdit, FiTrash2, FiEye, FiCheck, FiChevronsLeft } from "react-icons/fi";
 
-// search result populated on main page
+// Search result populated on main page
 
 
 export default function FlickResult({title, rating, id, displayed, tabbable, userReview, clicked, reviewClicked, editReview, deleteClicked, deleteReview, clearPrompt, confirmDeletePrompt}){

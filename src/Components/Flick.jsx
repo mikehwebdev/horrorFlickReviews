@@ -64,7 +64,7 @@ const [imdbData, setImdbData] = useState(null);
         <div className="flick">
           <h2 className="flick-title">{title}</h2>
           <p className="flick-mikey-rating">{stabHook(true, rating)}</p>
-          <h3 className="flick-mikey-sub-title">{subHeader}</h3>
+          <h3 className="flick-mikey-sub-title reveal">{subHeader}</h3>
           <p className="flick-mikey-review-text">
             <span className="mini-review-title">Mikey's mini-review:</span>
             <br /> {reviewText}
