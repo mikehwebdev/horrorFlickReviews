@@ -80,7 +80,7 @@ useEffect(() => {
 // Scroll to top when navigating back
 
 useEffect(()=> {
-    window.scrollTo(0,0)
+  window.scrollTo(0,0)
 },[top])
 
 // Triggers API data fetch when user has actually submitted a search - not on initial render
@@ -96,7 +96,6 @@ useEffect(() => {
 
 
 // Filter logic for flick reviews
-
 const filterResults = flickData.map(flick => {
   return {
     ...flick,
@@ -105,7 +104,6 @@ const filterResults = flickData.map(flick => {
 })
 
 // Generate FlickResult components using filtered array
-
 const flickResultElements = filterResults
 .filter(flickResult => flickResult.displayed === true)
 .map(flickResult => (
@@ -130,7 +128,6 @@ const flickResultElements = filterResults
 //Functions for userReview modal
 
 // Displays modal and action
-
 function reviewClicked(id){
   setFlickData(prev => (
     prev.map(flick => {
@@ -223,53 +220,53 @@ for (let flick of flickData) {
 
 if (match) return //Returns out if movie already exists - doesn't fetch
 
-      setFetchingData(true)
-      setFetchingError(null)
+  setFetchingData(true)
+  setFetchingError(null)
 
 try {
 
-      const res = await fetch(`http://www.omdbapi.com/?apikey=b60f271c&t=${imdbSearchString}`)
-      const data = await res.json()
+    const res = await fetch(`http://www.omdbapi.com/?apikey=b60f271c&t=${imdbSearchString}`)
+    const data = await res.json()
 
-      //Error handling for API
-      if (!data || data.Response === "False") {
-        setTimeout(() => {
-        setFetchingError(!data ? 'OMDb or network error' : data.Response ? 'Movie not found on OMDB. Try another search!' : 'Unknown error')
-        setFetchingData(false)
-        return
-        }, 1500)
-      }
-
-      //After pause to simulate fetching populates form
+    //Error handling for API
+    if (!data || data.Response === "False") {
       setTimeout(() => {
-        
-      setUserImdbData(data)  
-      setRenderData(
-
-      prev => {
-        return {
-          ...prev,
-          id: flickData.length,
-          title: data.Title,
-          actors: data.Actors,
-          director: data.Director,
-          release: data.Year,
-          poster: data.Poster,
-          imdbId: data.imdbID,
-          imdbRating: data.imdbRating,
-          imdbLink: data.imdbLink,
-          rating: stabChoice,
-          clicked:false
-        }
-      }
-    )
-    setFetchingData(false)
-      }, 1500)
-    } catch (err) {
-      setFetchingError('No response from OMDb')
+      setFetchingError(!data ? 'OMDb or network error' : data.Response ? 'Movie not found on OMDB. Try another search!' : 'Unknown error')
       setFetchingData(false)
       return
+      }, 1500)
     }
+
+    //After pause to simulate fetching populates form
+    setTimeout(() => {
+      
+    setUserImdbData(data)  
+    setRenderData(
+
+    prev => {
+      return {
+        ...prev,
+        id: flickData.length,
+        title: data.Title,
+        actors: data.Actors,
+        director: data.Director,
+        release: data.Year,
+        poster: data.Poster,
+        imdbId: data.imdbID,
+        imdbRating: data.imdbRating,
+        imdbLink: data.imdbLink,
+        rating: stabChoice,
+        clicked:false
+      }
+    }
+  )
+  setFetchingData(false)
+    }, 1500)
+  } catch (err) {
+    setFetchingError('No response from OMDb')
+    setFetchingData(false)
+    return
+  }
 }
 
 //Form logic

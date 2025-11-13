@@ -9,8 +9,17 @@ export default function stabsToRender (rendered, rating){
     let stabsToRender= new Array(5).fill('').map((stab, index) => {
         
     {/* if index is less or equal to score renders a full knife otherwise empty knife */}
-    return index < rating ? <RiKnifeBloodFill key={index} className="knife filled" id={index + 1} tabIndex={rendered ? 0 : -1}/> :  
-    <RiKnifeLine key={index} className="knife" id={index + 1} tabIndex={rendered ? 0 : -1} />
+    return index < rating ? 
+    <RiKnifeBloodFill 
+        key={index} 
+        className="knife filled" 
+        id={index + 1} 
+        tabIndex={rendered ? 0 : -1}/> :  
+    <RiKnifeLine 
+    key={index} 
+    className="knife" 
+    id={index + 1} 
+    tabIndex={rendered ? 0 : -1} />
 })
 
 return stabsToRender

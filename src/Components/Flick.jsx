@@ -1,58 +1,52 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { horrorFlicksData } from "../../horrorFlickData";
-import Error from "./Error";
-import Holding from "./HoldingMessage";
+import { useEffect, useState } from "react"
+import { useParams, Link } from "react-router-dom"
+import { horrorFlicksData } from "../../horrorFlickData"
+import Error from "./Error"
+import Holding from "./HoldingMessage"
 
-import { FaAnglesLeft } from "react-icons/fa6";
-import stabHook from "../../Hooks/stabHook";
-import imdbLogo from "../img/IMDb_Logo.png";
+import { FaAnglesLeft } from "react-icons/fa6"
+import stabHook from "../../Hooks/stabHook"
+import imdbLogo from "../img/IMDb_Logo.png"
 
 // Individual flick component
 
 export default function Flick() {
 
 // Retreive flickData from local storage with redundancy for if there is no data
-
 const localFlickData = JSON.parse(localStorage.getItem('flickData') || [])
 
 // Get individual id from params
-
-const { id } = useParams();
+const { id } = useParams()
 
 // Isolate selected flick
-
 const flick = localFlickData[id]
 
 // Error handling for invalid id
-
 if (!flick) {
   return (
     <Error 
       message="There's no flick here!"
       link="/"
     />
-  );
+  )
 }
 
-
-// Destructuring flcik properties as used so frquently
-
+// Destructuring flick properties as used so frequently
 const { title, rating, subHeader, reviewText, imdbLink, imdbId } = flick
 
 // Initialising imdbData as null - thisis replaced by fetch
+const [imdbData, setImdbData] = useState(null)
 
-const [imdbData, setImdbData] = useState(null);
 // Fetch imdbData searched for by user
   useEffect(() => {
     const interval = setTimeout(() => {
       fetch(`http://www.omdbapi.com/?apikey=b60f271c&i=${imdbId}`)
         .then(res => res.json())
-        .then(data => setImdbData(data));
-    }, 3000);
+        .then(data => setImdbData(data))
+    }, 3000)
     // Cleanup function to prevent memory leaks
-    return () => clearTimeout(interval);
-  }, [imdbId]);
+    return () => clearTimeout(interval)
+  }, [imdbId])
 
   return (
     <>
