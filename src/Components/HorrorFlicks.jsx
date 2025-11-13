@@ -5,36 +5,51 @@ import Flick from "./Flick"
 import stabHook from "../../Hooks/stabHook"
 import { horrorFlicksData } from "../../horrorFlickData"
 import { FaAnglesRight } from "react-icons/fa6"
-import { FaAnglesLeft } from "react-icons/fa6";
+import { FaAnglesLeft } from "react-icons/fa6"
 import Holding from "./HoldingMessage"
 import Error from "./Error"
 
 
-// Add comments to this file
+
+
+//  This is the main component for my app - It shows existing reviews and search inputs for finding your own 
 
 export default function HorrorFlicks() {
 
+// States for the component
+
+// State for search and input values
   const [searchString, setSearchString] = useState('')
   const [imdbInputString, setImdbInputString] = useState('')
   const [imdbSearchString, setImdbSearchString] = useState("")
+
+//State for API and managing API errors
   const [userImdbData, setUserImdbData] = useState(null)
   const [fetchingData, setFetchingData] = useState(false)
   const [fetchingError, setFetchingError] = useState(null)  
+
+//Review data - will either return default data or customised data if it exists
   const [flickData, setFlickData] = useState(() => {
-  const localFlickData = localStorage.getItem('flickData');
-  return localFlickData ? JSON.parse(localFlickData) : horrorFlicksData;
-});
+  const localFlickData = localStorage.getItem('flickData')
+  return localFlickData ? JSON.parse(localFlickData) : horrorFlicksData
+})
+
+// States for determining UI
   const [flickExists, setFlickExists] = useState(
     { exists: false,
       id:0
   })
   const [stabChoice, setStabChoice] = useState(0)
+  const [flipped, setFlipped] = useState(false)
+
+// React router, refs and misc
+
   const { id } = useParams()
   const firstRender = useRef(true)
   const { top } = useLocation()
-  const [flipped, setFlipped] = useState(false)
   const inputRef = useRef(null)
   
+// default movie date for new review
   const defaultRenderData = {
     id: flickData.length,
     title: "Please search",
@@ -54,13 +69,33 @@ export default function HorrorFlicks() {
 
 const [renderData, setRenderData] = useState(defaultRenderData)
 
+// My useEffects
+
+// Update localStorage when changing main movie data
+
 useEffect(() => {
-  localStorage.setItem('flickData', JSON.stringify(flickData));
-}, [flickData]);
+  localStorage.setItem('flickData', JSON.stringify(flickData))
+}, [flickData])
+
+// Scroll to top when navigating back
 
 useEffect(()=> {
     window.scrollTo(0,0)
 },[top])
+
+// Triggers API data fetch when user has actually submitted a search - not on initial render
+useEffect(() => {
+  if (firstRender.current) {
+  firstRender.current = false
+  return
+  }
+  
+  fetchData()
+  
+}, [imdbSearchString])
+
+
+// Filter logic for flick reviews
 
 const filterResults = flickData.map(flick => {
   return {
@@ -68,6 +103,8 @@ const filterResults = flickData.map(flick => {
     displayed: flick.displayed === false ? false : flick.title.toLowerCase().includes(searchString.toLowerCase())
   }
 })
+
+// Generate FlickResult components using filtered array
 
 const flickResultElements = filterResults
 .filter(flickResult => flickResult.displayed === true)
@@ -79,7 +116,7 @@ const flickResultElements = filterResults
     rating={flickResult.rating}
     displayed={flickResult.displayed}
     userReview={flickResult.userReview}
-    tabbable={searchString !== ''}
+    tabbable={searchString !== ''} //For accessibility - this ensures the flick results are only tabbable when searchString has a truthy value
     clicked={flickResult.clicked}
     reviewClicked={reviewClicked}
     editReview={editReview}
@@ -90,6 +127,10 @@ const flickResultElements = filterResults
   />
 ))
 
+//Functions for userReview modal
+
+// Displays modal and action
+
 function reviewClicked(id){
   setFlickData(prev => (
     prev.map(flick => {
@@ -97,9 +138,9 @@ function reviewClicked(id){
     }
   ))
 )
-
 }
 
+// Display edit mode for user review
 function editReview(id){
   window.scrollTo(0,0)
   setFlipped(true)
@@ -107,6 +148,7 @@ function editReview(id){
   setRenderData(flickData[id])
 }
 
+//  Show delete confirmation for user review
 function deleteReview(e,id){
   e.stopPropagation()
   e.preventDefault()
@@ -118,64 +160,68 @@ function deleteReview(e,id){
   ))
 }
 
+//  Clear modal
 function clearPrompt(e){
   if (e) {
   // This ensures function is immediately called on click and no event bubbling
   e.stopPropagation() 
-  //  Stops the page from rereeshing and scrolling to top
+  //  Stops the page from rereshing and scrolling to top
   e.preventDefault() 
   } 
 
-    
   setFlickData(prev => prev.map(flick => ({...flick, clicked: false, deleteClicked:false})))
 }
 
+// Delete review function - actually hides flick rather than delete
 function confirmDeletePrompt(e, id){
-
   e.stopPropagation() 
   e.preventDefault()
   
-  
-setFlickData(prev =>(
+  setFlickData(prev =>(
   prev.map(flick => flick.id === id ? {...flick, displayed:false} : flick)
 ))
 
-clearPrompt()
-
-setRenderData(defaultRenderData)
+  clearPrompt()
+  setRenderData(defaultRenderData)
 }
 
+// Updates local search string
 function localReviewStringUpdater(e) {
   setSearchString(e.target.value)
 }
 
+// Updates online search string
 function imdbInputStringUpdater(e) {
-  setFlickExists(prev => ({...prev,exists: false}))
-  setSearchString('')
+  setFlickExists(prev => ({...prev,exists: false})) //Clear state for managing "Flick exsits!" warning
+  setSearchString('') //Clears local search for smooth UX
 
   if (!e.target.value) {
-    setUserImdbData(null)
+    setUserImdbData(null) //Clear OMDb data if no string
   }
 
   setImdbInputString(e.target.value)
 }
 
+// API logic and asociated functions
+
+//Fetch movie data from OMDB
 async function fetchData(){
 
 let match = false
 
+// Checks to see if movie exists in movie data
 for (let flick of flickData) {
-  
-if (flick.title.toLowerCase() === imdbInputString.toLowerCase()) {
-  
-  setFlickExists({
+  if (flick.title.toLowerCase() === imdbInputString.toLowerCase()) {
+    setFlickExists({
     exists: true,
-    id: flick.id})
-    match = true
+    id: flick.id
+  })
+
+  match = true
 }  
 }
 
-if (match) return
+if (match) return //Returns out if movie already exists - doesn't fetch
 
       setFetchingData(true)
       setFetchingError(null)
@@ -185,6 +231,7 @@ try {
       const res = await fetch(`http://www.omdbapi.com/?apikey=b60f271c&t=${imdbSearchString}`)
       const data = await res.json()
 
+      //Error handling for API
       if (!data || data.Response === "False") {
         setTimeout(() => {
         setFetchingError(!data ? 'OMDb or network error' : data.Response ? 'Movie not found on OMDB. Try another search!' : 'Unknown error')
@@ -193,6 +240,7 @@ try {
         }, 1500)
       }
 
+      //After pause to simulate fetching populates form
       setTimeout(() => {
         
       setUserImdbData(data)  
@@ -224,16 +272,9 @@ try {
     }
 }
 
-useEffect(() => {
-  if (firstRender.current) {
-  firstRender.current = false
-  return
-  }
-  
-  fetchData()
-  
-}, [imdbSearchString])
+//Form logic
 
+// Updates form fields after each user keystroke
 function updateRenderData(e) {
     
   const name = e.target.name
@@ -244,6 +285,7 @@ function updateRenderData(e) {
   })
 }
 
+// Fancy and dynamic/contextual button text
 function buttonDisplay (){
   if (!userImdbData) return 'Search OMDb for your flick'
   if (!renderData.subHeader) return 'Add your subheader'
@@ -252,9 +294,11 @@ function buttonDisplay (){
   return 'Submit'
 }
 
+//Save down new or edited review to flickData
 function flickDataUpdater(e){
   e.preventDefault()
 
+//Add new review
 if (renderData.id === flickData.length) {
   setFlickData( prev => [
     ...prev,
@@ -264,10 +308,12 @@ if (renderData.id === flickData.length) {
   }]) 
 }
 
+//Update existing review if not clear modal
 setFlickData(
   prev => prev.map(flick => flick.id === renderData.id ? {...renderData, rating:stabChoice} :  {...flick, clicked: false} )
 )
 
+//Restore form for next use
     inputRef.current.value = ''
     inputRef.current.focus()
     setFlipped(false)
@@ -275,6 +321,7 @@ setFlickData(
     setImdbInputString('') 
 }
 
+// Cancel the edit function and restore form for next use
 function cancelEdit(){
     inputRef.current.value = ''
     inputRef.current.focus()
@@ -283,13 +330,18 @@ function cancelEdit(){
     setImdbInputString('') 
 }
 
+// Rendering code
+
   return (
     <>
+    {/* Show selected flick by ID from URL else show main search */}
         {id ? (
           <Flick />
         ) : (
           <div className="flick-search">
+            {/* Search inputs */}
             <div className="flick-search-inputs">
+              {/* Local review search */}
               <form className="search-input-form" onSubmit={e => e.preventDefault()}>
                 <input
                   type="text"
@@ -305,6 +357,8 @@ function cancelEdit(){
                 {searchString && <button type="submit" className="fetch-btn-flicks" tabIndex={-1}></button>}
               </form>
               <p className="input-seperator-text">- or -</p>
+
+              {/* OMDb search */}
               <form onSubmit={(e) => {
                 e.preventDefault()
                 setSearchString('')
@@ -322,6 +376,8 @@ function cancelEdit(){
                   maxLength={25}
                 />
                 {imdbInputString && <button type="submit" className="fetch-btn-imdb"><FaAnglesRight className="drop-in"  tabIndex={-1}/></button>}
+
+                {/* Duplicate movie popup */}
                 {flickExists.exists && 
                 
                 <div className="user-prompt splat">
@@ -334,6 +390,8 @@ function cancelEdit(){
                 }
               </form>
             </div>  
+
+            {/* Fancy flipper element */}
                       <div className="flipper">
                 <div className={`flipper-inner ${flipped ? 'flipped' : null }`}>
                   <div className="flipper-front">
@@ -352,6 +410,7 @@ function cancelEdit(){
 
               <form className={`flick-input-form${userImdbData ? ' opacity-full' : ''}`} tabIndex={-1} onSubmit={(e) => flickDataUpdater(e)}>                
                 <h2 className="flick-input-form-search-title-complete" >{renderData.title}</h2> 
+                {/* Stab based rating system) */}
                 <p className={`flick-input-search-rating ${!stabChoice ? '' : 'completed'}`} 
                 onClick={e => setStabChoice(e.target.id)}
                 onKeyDown={ e => {
@@ -361,6 +420,8 @@ function cancelEdit(){
                   }
                 }}
                 >{stabHook(userImdbData ? true : false, stabChoice)}</p>
+
+                {/* User input section */}
                 <input
                   type="text"
                   placeholder="add subheader"
@@ -378,6 +439,8 @@ function cancelEdit(){
                   value={renderData.reviewText}
                   tabIndex={userImdbData ? 0 : -1}
                 />
+
+                {/* Inout for for new review */}
                   <button className="cancel-edit-btn" type="button" onClick={() => cancelEdit()}>
                     <FaAnglesLeft className="link-arrows" />
                     <p className="cancel-edit-text">back</p>
@@ -386,6 +449,8 @@ function cancelEdit(){
                 type="submit"
                 disabled={buttonDisplay() !== 'Submit'}
                 >{buttonDisplay()}</button>
+
+                {/* Fetched movie info */}
                 <p className="flick-input-actors">
                   Actors: {renderData.actors}
                 </p>

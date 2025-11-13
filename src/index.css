@@ -3,6 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
+/* Colour CSS variables */
+
 :root {
   --white: #fff;
   --grey: #8D99AE;
@@ -52,9 +54,9 @@ html {
   justify-content: center;
 }
 
-/*** General typography misc styles ***/
+/*** General typography & misc styles ***/
 
-/* Main page stlyes */
+/* Main page styes */
 
 .title {
   font-size: clamp(2.5rem, 10vw, 4.25rem);
@@ -786,6 +788,12 @@ color: var(--grey);
   font-size: 1.5rem;
 }
 
+/* Utility classes */
+
+.opacity-full {
+  opacity: 1;
+}
+
 /* Animation classes */
 
 .slide-up {
@@ -857,12 +865,6 @@ color: var(--grey);
   letter-spacing: .25px;
 }
 
-}
-
-/* Utility classes */
-
-.opacity-full {
-  opacity: 1;
 }
 
 /* Animations */

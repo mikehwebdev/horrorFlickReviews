@@ -1,6 +1,6 @@
 
 import {Link}  from "react-router-dom"
-import { FaAnglesLeft } from "react-icons/fa6";
+import { FaAnglesLeft } from "react-icons/fa6"
 
 /* Component for displaying errors */
 

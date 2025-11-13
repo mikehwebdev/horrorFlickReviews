@@ -105,5 +105,5 @@ const [imdbData, setImdbData] = useState(null);
         </div>
       )}
     </>
-  );
+  )
 }

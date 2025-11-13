@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import stabHook from "../../Hooks/stabHook"
-import { FiEdit, FiTrash2, FiEye, FiCheck, FiChevronsLeft } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiEye, FiCheck, FiChevronsLeft } from "react-icons/fi"
 
 // Search result populated on main page
 
