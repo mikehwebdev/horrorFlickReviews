@@ -151,7 +151,9 @@ function deleteReview(e,id){
   e.preventDefault()
   setFlickData(prev => (
     prev.map(flick => {
-      return {...flick, deleteClicked: id === flick.id ? true : false }
+      return {...flick, 
+        deleteClicked: id === flick.id ? true : false,
+        title: id === flick.id ? '' : flick.title}
     }
   )
   ))
