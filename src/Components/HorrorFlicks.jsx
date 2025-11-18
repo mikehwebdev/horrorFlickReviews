@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { useParams, Link, useLocation} from "react-router-dom"
 import FlickResult from "./FlickResult"
 import Flick from "./Flick"
@@ -96,34 +96,39 @@ useEffect(() => {
 
 
 // Filter logic for flick reviews
-const filterResults = flickData.map(flick => {
-  return {
+const filterResults = useMemo(() => {
+  return flickData.map(flick => ({
     ...flick,
-    displayed: flick.displayed === false ? false : flick.title.toLowerCase().includes(searchString.toLowerCase())
-  }
-})
+    displayed: flick.displayed === false 
+      ? false 
+      : flick.title.toLowerCase().includes(searchString.toLowerCase())
+  }))
+}, [flickData])
 
 // Generate FlickResult components using filtered array
-const flickResultElements = filterResults
-.filter(flickResult => flickResult.displayed === true)
-.map(flickResult => (
-  <FlickResult
-    key={flickResult.id}
-    id={flickResult.id}
-    title={flickResult.title}
-    rating={flickResult.rating}
-    displayed={flickResult.displayed}
-    userReview={flickResult.userReview}
-    tabbable={searchString !== ''} //For accessibility - this ensures the flick results are only tabbable when searchString has a truthy value
-    clicked={flickResult.clicked}
-    reviewClicked={reviewClicked}
-    editReview={editReview}
-    deleteReview={deleteReview}
-    deleteClicked={flickResult.deleteClicked}
-    clearPrompt={clearPrompt}
-    confirmDeletePrompt={confirmDeletePrompt}
-  />
-))
+const flickResultElements = useMemo(() => 
+  filterResults
+    .filter(flickResult => flickResult.displayed === true)
+    .map(flickResult => (
+      <FlickResult
+        key={flickResult.id}
+        id={flickResult.id}
+        title={flickResult.title}
+        rating={flickResult.rating}
+        displayed={flickResult.displayed}
+        userReview={flickResult.userReview}
+        tabbable={searchString !== ''} //For accessibility - this ensures the flick results are only tabbable when searchString has a truthy value
+        clicked={flickResult.clicked}
+        reviewClicked={reviewClicked}
+        editReview={editReview}
+        deleteReview={deleteReview}
+        deleteClicked={flickResult.deleteClicked}
+        clearPrompt={clearPrompt}
+        confirmDeletePrompt={confirmDeletePrompt}
+      />
+    )),
+  [filterResults]
+)
 
 //Functions for userReview modal
 
@@ -407,7 +412,11 @@ function cancelEdit(){
                   link={null}/>
               :
 
-              <form className={`flick-input-form${userImdbData ? ' opacity-full' : ''}`} tabIndex={-1} onSubmit={(e) => flickDataUpdater(e)}>                
+              <form className={`flick-input-form${userImdbData ? ' opacity-full' : ''}`} 
+              tabIndex={-1} 
+              onSubmit={(e) => flickDataUpdater(e)}
+              disabled={!userImdbData}
+              >                
                 <h2 className="flick-input-form-search-title-complete" >{renderData.title}</h2> 
                 {/* Stab based rating system) */}
                 <p className={`flick-input-search-rating ${!stabChoice ? '' : 'completed'}`} 
@@ -440,7 +449,7 @@ function cancelEdit(){
                 />
 
                 {/* Inout for for new review */}
-                  <button className="cancel-edit-btn" type="button" onClick={() => cancelEdit()}>
+                  <button className="cancel-edit-btn" type="button" disabled={!userImdbData} onClick={() => cancelEdit()}>
                     <FaAnglesLeft className="link-arrows" />
                     <p className="cancel-edit-text">back</p>
                   </button>
