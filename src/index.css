@@ -68,6 +68,7 @@ html {
   letter-spacing: 2px;
   font-family: 'Creepster', sans-serif;
   animation: spooky-glow 2s infinite alternate;
+  max-width: 95%;
 }
 
 .error-message {
