@@ -99,19 +99,17 @@ useEffect(() => {
 
 
 // Filter logic for flick reviews
-const filterResults = useMemo(() => {
-  return flickData.map(flick => ({
+const filterResults = flickData.map(flick => ({
     ...flick,
     displayed: flick.displayed === false 
       ? false 
       : flick.title.toLowerCase().includes(searchString.toLowerCase())
   }))
-}, [flickData])
+
 
 // Generate FlickResult components using filtered array
 const flickResultElements = useMemo(() => 
   filterResults
-    .filter(flickResult => flickResult.displayed === true)
     .map(flickResult => (
       <FlickResult
         key={flickResult.id}
