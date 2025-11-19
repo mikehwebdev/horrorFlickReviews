@@ -7,7 +7,7 @@ export default function Home(){
     return (
         <>
         <Link to="/">
-        <h2 className="title">Mikey's Horror Micro Reviews</h2>
+        <h2 className="title">Mikey's Micro Horror Reviews</h2>
         </Link>
         <main className="container">
             <Outlet />
