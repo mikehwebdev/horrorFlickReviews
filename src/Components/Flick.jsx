@@ -12,9 +12,6 @@ import imdbLogo from "../img/IMDb_Logo.png"
 
 export default function Flick() {
 
-//Secured API key  
-const apiKey = import.meta.env.VITE_OMDB_API_KEY 
-
 // Retreive flickData from local storage with redundancy for if there is no data
 const localFlickData = JSON.parse(localStorage.getItem('flickData') || [])
 
@@ -43,7 +40,7 @@ const [imdbData, setImdbData] = useState(null)
 // Fetch imdbData searched for by user
   useEffect(() => {
     const interval = setTimeout(() => {
-      fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`)
+      fetch(`http://www.omdbapi.com/?apikey=b60f271c&i=${imdbId}`)
         .then(res => res.json())
         .then(data => setImdbData(data))
     }, 3000)
