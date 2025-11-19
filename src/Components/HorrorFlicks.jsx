@@ -16,8 +16,7 @@ import Error from "./Error"
 
 export default function HorrorFlicks() {
 
-  // variable to help hide API key
-
+//Secured API key  
 const apiKey = import.meta.env.VITE_OMDB_API_KEY
 
 // State for the component
