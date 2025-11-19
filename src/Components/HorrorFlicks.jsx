@@ -235,7 +235,7 @@ if (match) return //Returns out if movie already exists - doesn't fetch
 
 try {
 
-    const res = await fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbSearchString}`)
+    const res = await fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${imdbSearchString}`)
     const data = await res.json()
 
     //Error handling for API

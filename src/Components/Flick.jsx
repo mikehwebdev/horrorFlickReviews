@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { horrorFlicksData } from "../../horrorFlickData"
 import Error from "./Error"
-import Holding from "./HoldingMessage"
+import HoldingMessage from "./HoldingMessage"
 
 import { FaAnglesLeft } from "react-icons/fa6"
 import stabHook from "../../Hooks/stabHook"
@@ -41,10 +41,11 @@ const { title, rating, subHeader, reviewText, imdbLink, imdbId } = flick
 // Initialising imdbData as null - thisis replaced by fetch
 const [imdbData, setImdbData] = useState(null)
 
-// Fetch imdbData searched for by user
+// Fetch imdbData searched for by user  with a setTimeOut to mimic a slow network
+// -  this fetch is a partial dupe of function in HorrorFlicks as you can't have async function in useEffect
   useEffect(() => {
     const interval = setTimeout(() => {
-      fetch(`http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`)
+      fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`)
         .then(res => res.json())
         .then(data => setImdbData(data))
     }, 3000)
@@ -56,7 +57,7 @@ const [imdbData, setImdbData] = useState(null)
     <>
     {/* Loading component to be displayed while fetching */}
       {!imdbData ? (
-        <Holding />
+        <HoldingMessage />
       ) : (
         // Flick data populated by user
         <div className="flick">
