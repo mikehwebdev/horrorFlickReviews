@@ -16,7 +16,11 @@ import Error from "./Error"
 
 export default function HorrorFlicks() {
 
-// States for the component
+  // variable to help hide API key
+
+const apiKey = import.meta.env.VITE_OMDB_API_KEY
+
+// State for the component
 
 // State for search and input values
   const [searchString, setSearchString] = useState('')
@@ -232,7 +236,7 @@ if (match) return //Returns out if movie already exists - doesn't fetch
 
 try {
 
-    const res = await fetch(`http://www.omdbapi.com/?apikey=b60f271c&t=${imdbSearchString}`)
+    const res = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}=${imdbSearchString}`)
     const data = await res.json()
 
     //Error handling for API
