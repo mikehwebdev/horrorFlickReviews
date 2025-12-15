@@ -226,7 +226,7 @@ a {
   width: 100%;
   transition: transform 500ms;
   transform-style: preserve-3d;
-  backface-visibility: hidden;
+  
 }
 
 .flipper-front {
@@ -250,6 +250,13 @@ a {
 .flipped {
   transform: rotateY(180deg);
 }
+
+.no-visibility {
+  animation: no-visibility 250ms linear forwards;
+}
+
+/* .no-visibility is a fix for an issue with backface-visibility in Chrome that stopped mny editable 
+flick from being clickable but in Firefox it displayed an inverted flipper parent if the css property was removed - this is a neat workaround that isn't visible to the user */
 
 /* Flick input form layout */
 
@@ -300,7 +307,6 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--grey);
   padding: .5rem;
   border-radius: .5rem;
   cursor: pointer;
@@ -308,11 +314,13 @@ a {
   margin-bottom: 1rem;
   transition: background-color 500ms ease-in;
   border: var(--grey) dashed 2px;
+  color: var(--white);
 }
 
 .flick-input-subheader {
   grid-area: fs-input-sub;
   transition: background-color 500ms ease-in;
+  color: var(--white);
 }
 
 .flick-input-review-text {
@@ -320,6 +328,10 @@ a {
   min-width: 100%;
   margin-bottom: .8rem;
   transition: background-color 500ms ease-in;
+  color: var(--white);
+  box-sizing: border-box;
+  resize: vertical;
+  overflow-y: auto;
 }
 
 .flick-input-subheader, .flick-input-review-text, .flick-input-form-search-title {
@@ -336,6 +348,8 @@ a {
   font-weight: 500;
   background-color: var(--midnight-purple-light);
   border: var(--grey) dashed 2px;
+  color: var(--white);
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
 }
 
 .flick-input-director,
@@ -363,14 +377,14 @@ a {
 }
 
 .flick-input-submit, .cancel-edit-btn{
-  height: 3rem;
+  height: 4rem;
   margin: .5rem 0 1rem .5rem;
-  padding: .5rem ;
   border-radius: .5rem;
   background-color: var(--midnight-purple-light);
   color: var(--white);
   transition: opacity 500ms ease-in;
   opacity: .25;
+  font-size: clamp(1rem, 2.75vw, 1.35rem);
 }
 
 .cancel-edit-btn {
@@ -424,7 +438,8 @@ a {
   align-items: center;
 }
 
-.search-input::placeholder, .imdb-search-input::placeholder {
+.search-input::placeholder, .imdb-search-input::placeholder,
+.flick-input-subheader::placeholder, .flick-input-review-text::placeholder {
   color: var(--white);
 }
 
@@ -796,6 +811,11 @@ color: var(--grey);
   opacity: 1;
 }
 
+.no-pointers {
+  cursor: none;
+  pointer-events: none;
+}
+
 /* Animation classes */
 
 .slide-up {
@@ -953,4 +973,11 @@ color: var(--grey);
 @keyframes reveal {
   0%{max-width: 0%;}
   100%{max-width: 100%;}
+}
+
+/* Supporting animation to hide a browser based bug */
+
+@keyframes no-visibility {
+  0%{opacity: 1;}
+  100%{opacity: 0;}
 }

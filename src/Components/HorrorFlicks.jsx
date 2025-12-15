@@ -398,8 +398,8 @@ function cancelEdit(){
 
             {/* Fancy flipper element */}
                       <div className="flipper">
-                <div className={`flipper-inner ${flipped ? 'flipped' : null }`}>
-                  <div className="flipper-front">
+                <div className={`flipper-inner ${flipped ? 'flipped' : '' }`}>
+                  <div className={`flipper-front ${flipped ? 'no-visibility' : ''}`}>
                           <div className="flick-result-container" tabIndex={-1}>
                 {flickResultElements}
               </div>
@@ -416,12 +416,13 @@ function cancelEdit(){
               <form className={`flick-input-form${userImdbData ? ' opacity-full' : ''}`} 
               tabIndex={-1} 
               onSubmit={(e) => flickDataUpdater(e)}
-              // disabled={!userImdbData}
+              
               >                
                 <h2 className="flick-input-form-search-title-complete" >{renderData.title}</h2> 
                 {/* Stab based rating system) */}
-                <p className={`flick-input-search-rating ${!stabChoice ? '' : 'completed'}`} 
+                <p className={`flick-input-search-rating ${!stabChoice ? '' : 'completed'} ${!userImdbData ? 'no-pointers' : ''}`} 
                 onClick={e => setStabChoice(e.target.id)}
+                
                 onKeyDown={ e => {
                   if (e.key === ' ' || e.key === 'Enter') {
                     e.preventDefault()
@@ -434,7 +435,7 @@ function cancelEdit(){
                 <input
                   type="text"
                   placeholder="add subheader"
-                  className={`flick-input-subheader ${renderData.subHeader? 'completed': ''}`}
+                  className={`flick-input-subheader ${renderData.subHeader? 'completed': ''} ${!userImdbData ? 'no-pointers' : ''}`}
                   name={"subHeader"}
                   onChange={(e) => updateRenderData(e)}
                   value={renderData.subHeader}
@@ -442,7 +443,7 @@ function cancelEdit(){
                 />
                 <textarea
                   placeholder="add your review"
-                  className={`flick-input-review-text ${renderData.reviewText? 'completed': ''}`}
+                  className={`flick-input-review-text ${renderData.reviewText? 'completed': ''} ${!userImdbData ? 'no-pointers' : ''}`}
                   name={"reviewText"}
                   onChange={(e)=> updateRenderData(e)}
                   value={renderData.reviewText}
