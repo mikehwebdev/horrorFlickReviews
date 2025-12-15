@@ -416,7 +416,7 @@ function cancelEdit(){
               <form className={`flick-input-form${userImdbData ? ' opacity-full' : ''}`} 
               tabIndex={-1} 
               onSubmit={(e) => flickDataUpdater(e)}
-              disabled={!userImdbData}
+              // disabled={!userImdbData}
               >                
                 <h2 className="flick-input-form-search-title-complete" >{renderData.title}</h2> 
                 {/* Stab based rating system) */}
